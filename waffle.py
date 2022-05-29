@@ -5,7 +5,7 @@ inputs_c = []
 horizontal_l = []
 vertical_l = []
 d = []
-f = open("dict.txt", "r+")
+f = open("dict3.txt", "r+")
 for line in f:
     d.append(line.strip("\n").lower())
 f.close()
