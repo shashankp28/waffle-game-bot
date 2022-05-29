@@ -32,7 +32,6 @@ while True:
         print()
         continue
     print()
-
     print("Input initial configuration (colors):")
     for i in range(n):
         inputs_c.append(list(input().lower()))
@@ -42,65 +41,31 @@ while True:
         continue
     print()
     break
-
+all_letters = lis_to_chars(inputs_l)
 horizontal_l = collect_horizontal(inputs_l)
 vertical_l = collect_vertical(inputs_l)
-
 horizontal_c = collect_horizontal(inputs_c)
 vertical_c = collect_vertical(inputs_c)
-
 d_change = []
-for guess, feed in zip(horizontal_l+vertical_l, horizontal_c+vertical_c):
-    temp = d[:]
-    d_change += change(temp, feed, guess)
-
-# print(d_change)
-all_letters = lis_to_chars(inputs_l)
-d_change2 = []
-for word in d_change:
+for word in d:
     proper = True
     for letter in list(word):
         proper = proper and (all_letters.count(
             letter) >= list(word).count(letter))
     if proper:
-        d_change2.append(word)
+        d_change.append(word)
 
-d_change2.sort()
-# print(d_change2)
+d_change.sort()
 perfect_candidates = [horizontal_l[0],
                       vertical_l[2], horizontal_l[2], vertical_l[0]]
 fixed = [w[0]+w[4] for w in perfect_candidates]
 
 fixed_clockwise = []
 for fl in fixed:
-    fixed_clockwise.append(first_last(fl, d_change2))
-
-sol = False
-for up in fixed_clockwise[0]:
-    if sol:
-        break
-    for right in fixed_clockwise[1]:
-        if sol:
-            break
-        for down in fixed_clockwise[2]:
-            if sol:
-                break
-            for left in fixed_clockwise[3]:
-                if sol:
-                    break
-                mid_hs = first_last(left[2]+right[2], d_change2)
-                mid_vs = first_last(up[2]+down[2], d_change2)
-                for mid_h in mid_hs:
-                    if sol:
-                        break
-                    for mid_v in mid_vs:
-                        if final_sat(up, right, down, left, mid_h, mid_v, horizontal_l[2][2]):
-                            sol = True
-                            break
-
-# print(up, right, down, left, mid_h, mid_v)
-
+    fixed_clockwise.append(first_last(fl, d_change))
 try:
+    up, right, down, left, mid_h, mid_v = final_filter(
+        fixed_clockwise, d_change, all_letters, horizontal_l)
     print("Solution:")
     print(up.upper())
     print((left[1]+' '+mid_v[1]+' '+right[1]).upper())

@@ -96,9 +96,42 @@ def first_last(fl, lis):
     return candidate
 
 
-def final_sat(up, right, down, left, mid_h, mid_v, center):
+def to_structure(up, right, down, left, mid_h, mid_v):
+    structure = []
+    structure.append(up.lower())
+    structure.append((left[1]+' '+mid_v[1]+' '+right[1]).lower())
+    structure.append((mid_h.upper()).lower())
+    structure.append((left[3]+' '+mid_v[3]+' '+right[3]).lower())
+    structure.append((down).lower())
+    return structure
+
+
+def final_sat(up, right, down, left, mid_h, mid_v, center, all_letters):
+    structure = to_structure(up, right, down, left, mid_h, mid_v)
+    chars = lis_to_chars(structure)
+    chars.sort()
+    all_letters.sort()
+    if chars != all_letters:
+        return False
     if len(set([up, down, left, right, mid_v, mid_h])) != 6:
         return False
     if mid_v[2] != center or mid_h[2] != center:
         return False
     return True
+
+
+def final_filter(fixed_clockwise, d, all_letters, horizontal_l):
+    for up in fixed_clockwise[0]:
+        for right in fixed_clockwise[1]:
+            for down in fixed_clockwise[2]:
+                for left in fixed_clockwise[3]:
+                    mid_hs = first_last(left[2]+right[2], d)
+                    mid_vs = first_last(up[2]+down[2], d)
+                    for mid_h in mid_hs:
+                        for mid_v in mid_vs:
+                            structure = to_structure(
+                                up, right, down, left, mid_h, mid_v)
+                            chars = lis_to_chars(structure)
+                            if final_sat(up, right, down, left, mid_h, mid_v, horizontal_l[1][2], all_letters):
+                                return [up, right, down, left, mid_h, mid_v]
+    return None

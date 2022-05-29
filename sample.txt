@@ -1,12 +1,27 @@
+Sample letters 1:
 VUEIE
 T E I
 IIMLI
 V A S
 DEOTR
 
+Sample colours 2:
 GYRRG
 R R R
 YRGRR
 Y R Y
 GGRYG
 
+Sample letters 1:
+LEAOR
+I Y A
+EEEEA
+K K G
+LATWN
+
+Sample colours 2:
+GYYRG
+R R G
+YGGRR
+R Y R
+GRYRG
