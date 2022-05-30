@@ -1,5 +1,13 @@
+from tqdm import tqdm
 n = 5
 colors = ["r", "y", "g"]
+
+
+def find_comb(lis_2d):
+    p = 1
+    for lis in lis_2d:
+        p *= len(lis)
+    return p
 
 
 def to_str(lis):
@@ -121,17 +129,17 @@ def final_sat(up, right, down, left, mid_h, mid_v, center, all_letters):
 
 
 def final_filter(fixed_clockwise, d, all_letters, horizontal_l):
+    print("Searching filtered solutions...")
+    pb = tqdm(total=find_comb(fixed_clockwise))
     for up in fixed_clockwise[0]:
         for right in fixed_clockwise[1]:
             for down in fixed_clockwise[2]:
                 for left in fixed_clockwise[3]:
+                    pb.update(n=1)
                     mid_hs = first_last(left[2]+right[2], d)
                     mid_vs = first_last(up[2]+down[2], d)
                     for mid_h in mid_hs:
                         for mid_v in mid_vs:
-                            structure = to_structure(
-                                up, right, down, left, mid_h, mid_v)
-                            chars = lis_to_chars(structure)
                             if final_sat(up, right, down, left, mid_h, mid_v, horizontal_l[1][2], all_letters):
                                 return [up, right, down, left, mid_h, mid_v]
     return None

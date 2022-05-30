@@ -1,15 +1,13 @@
 from functions import *
-
 inputs_l = []
 inputs_c = []
 horizontal_l = []
 vertical_l = []
 d = []
-f = open("dict3.txt", "r+")
+f = open("dict.txt", "r+")
 for line in f:
     d.append(line.strip("\n").lower())
 f.close()
-
 print("Input Format for letters:")
 print("VALUE")
 print("I I S")
@@ -59,13 +57,14 @@ d_change.sort()
 perfect_candidates = [horizontal_l[0],
                       vertical_l[2], horizontal_l[2], vertical_l[0]]
 fixed = [w[0]+w[4] for w in perfect_candidates]
-
 fixed_clockwise = []
 for fl in fixed:
     fixed_clockwise.append(first_last(fl, d_change))
+
 try:
     up, right, down, left, mid_h, mid_v = final_filter(
         fixed_clockwise, d_change, all_letters, horizontal_l)
+    print()
     print("Solution:")
     print(up.upper())
     print((left[1]+' '+mid_v[1]+' '+right[1]).upper())
