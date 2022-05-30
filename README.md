@@ -32,4 +32,4 @@ GGRYG<br>
 - Also see _sample.txt_
 
 Once you obtain the solution switch the tiles such that at every swap you get atleast 1 extra green tile.
-This will ensure that the solution is obtained in less than or equal to 15 steps evrytime !
+This will ensure that the solution is obtained in less than or equal to 15 steps everytime !
